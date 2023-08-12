@@ -2,7 +2,7 @@
 
 A Url Builder for [mongoose-bread](https://github.com/mjlux/mongoose-bread).
 
-
+[![npm version](https://img.shields.io/npm/v/mongoose-bread-url-builder.svg)](https://www.npmjs.com/package/mongoose-bread-url-builder)
 [![unittests](https://github.com/mjlux/mongoose-bread-url-builder/actions/workflows/unittests.js.yml/badge.svg)](https://github.com/mjlux/mongoose-bread-url-builder/actions/workflows/unittests.js.yml)
 
 ## Why This Plugin
