@@ -1,8 +1,7 @@
 "use strict";
 
-const mongoose = require("mongoose");
-const { expect } = require("chai");
-const { BreadUrlBuilder } = require("../dist/index");
+import { expect } from "chai";
+import BreadUrlBuilder from "../src/BreadUrlBuilder.js";
 
 describe("BreadUrlBuilder", function () {
   it("is instantiable", function () {
@@ -66,7 +65,7 @@ describe("BreadUrlBuilder", function () {
       .endpoint("/products")
       .hash("headline")
       .addPath("/new")
-      .addToPath(new mongoose.Types.ObjectId("6478d57784fabdbf127d0a2a"))
+      .addToPath("6478d57784fabdbf127d0a2a")
       .addParameter("customParameter", 12)
       .lean(false)
       .leanWithId(false)
@@ -259,7 +258,7 @@ describe("BreadUrlBuilder", function () {
   it("resets the Url", function () {
     const testUrl = new BreadUrlBuilder("http://api.test.org#test")
       .endpoint("products")
-      .addPath(new mongoose.Types.ObjectId("647915f96cd4bbcb546def4c"))
+      .addPath("647915f96cd4bbcb546def4c")
       .addPath("details")
       .projection({ title: 0, age: 0 });
     expect(`${testUrl}`).to.equal(

@@ -5,7 +5,7 @@ const removeNullAndUndefinedStrings = ([k, v]) =>
 const removeLeadingAndTrailingSlash = (s) => String(s).replace(/^\/|\/$/g, "");
 const { isArray } = Array;
 
-class BreadUrlBuilder {
+export default class BreadUrlBuilder {
   static ASC = Symbol("asc");
   static DESC = Symbol("desc");
   static HTTPS = Symbol("https");
@@ -56,7 +56,6 @@ class BreadUrlBuilder {
     );
     return this;
   }
-
   protocol($protocol) {
     const allowedProtocols = [
       BreadUrlBuilder.FORCE_HTTP,
@@ -149,13 +148,6 @@ class BreadUrlBuilder {
     this.#parameters.set("page", $page);
     return this;
   }
-  
-  /**
-   *
-   * @param {String} $sort
-   * @param {BreadUrlBuilder.ASC|BreadUrlBuilder.DESC} $order
-   * @returns BreadUrlBuilder
-   */
   addSort($sort, $order) {
     if( !this.#parameters.has("sort") )
       return this.sort($sort, $order);
@@ -207,10 +199,6 @@ class BreadUrlBuilder {
 
     return this;
   }
-  /**
-   * @param {Sting|Array} $fields
-   * @returns BreadUrlBuilder
-   */
   select($fields = "") {
     if (this.#_excludeCalled) throw new Error(SelectExcludeErrorMessage);
     this.#_selectCalled = true;
@@ -221,10 +209,6 @@ class BreadUrlBuilder {
     this.#parameters.set("select", $fields);
     return this;
   }
-  /**
-   * @param {Sting|Array} $fields
-   * @returns BreadUrlBuilder
-   */
   exclude($fields = "") {
     if (this.#_selectCalled) throw new Error(SelectExcludeErrorMessage);
     this.#_excludeCalled = true;
@@ -253,9 +237,7 @@ class BreadUrlBuilder {
     this.#parameters.set("populate", JSON.stringify($populate));
     return this;
   }
-
   // --------- COMPARE FNS -------------
-
   with($key) {
     if (typeof $key != "string")
       throw new Error("invalid argument - expected String - @with()");
@@ -340,7 +322,6 @@ class BreadUrlBuilder {
     return this;
   }
   // --------- RESET & CLEAR  -----------
-
   resetToBaseUrl() {
     this.#endpoint = "";
     this.#paths = new Array();
@@ -367,9 +348,7 @@ class BreadUrlBuilder {
     this.#hash = "";
     return this;
   }
-
   // --------- GETTER  -----------
-
   getParameter($key){ return this.#parameters.get($key) }
   getLean(){ return this.#parameters.get("lean") }
   getLeanWithId(){ return this.#parameters.get("leanWithId") }
@@ -404,5 +383,3 @@ class BreadUrlBuilder {
     return this.get().href;
   }
 }
-
-module.exports = BreadUrlBuilder;
