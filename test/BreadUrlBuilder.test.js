@@ -100,7 +100,7 @@ describe("BreadUrlBuilder", function () {
     );
   });
 
-  it('adds "/" seperated path with one call to .addPath()"', function () {
+  it('adds "/" separated path with one call to .addPath()"', function () {
     const testUrl = new BreadUrlBuilder("http://api.test.org")
       .addPath("/products/123/details/")
       .addPath("newest")
@@ -112,6 +112,23 @@ describe("BreadUrlBuilder", function () {
 
     const userId = "6478d57784fabdbf127d0a2a";
     testUrl.clearPath().addPath("/member/friend/").addToPath(userId);
+    expect(`${testUrl}`).to.equal(
+      "https://api.test.org/member/friend/6478d57784fabdbf127d0a2a"
+    );
+  });
+
+  it('removes multiple consecutive "/"', function () {
+    const testUrl = new BreadUrlBuilder("http://api.test.org")
+      .addToPath("////products///")
+      .addPath("newest")
+      .addToPath("////456////")
+      .addPath("////orange//");
+    expect(`${testUrl}`).to.equal(
+      "https://api.test.org/products/newest/456/orange"
+    );
+
+    const userId = "6478d57784fabdbf127d0a2a";
+    testUrl.clearPath().endpoint('///////member///').addPath("//friend/").addToPath(userId);
     expect(`${testUrl}`).to.equal(
       "https://api.test.org/member/friend/6478d57784fabdbf127d0a2a"
     );
