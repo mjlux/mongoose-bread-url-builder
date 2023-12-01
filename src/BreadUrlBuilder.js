@@ -5,33 +5,38 @@ const { isArray } = Array;
 
 /**
  * Chainable expressive URL Builder for mongoose-bread
- * @export
- * @class BreadUrlBuilder
+ * @class
  */
-export default class BreadUrlBuilder {
+class BreadUrlBuilder {
 
   /**
-   * Ascending order to be used with sort()
-   * @static
+   * Used as $order argument for {@link sort} method
+   * @memberof BreadUrlBuilder
    * @type {symbol}
+   * @static
    */
   static ASC = Symbol("asc");
   /**
-   * Descending order to be used with sort()
-   * @static
+   * Used as $order argument for {@link sort} method
+   * @memberof BreadUrlBuilder
    * @type {symbol}
+   * @static
    */
   static DESC = Symbol("desc");
   /**
-   * Set protocol to https:// - used as argument for protocol() method
-   * @static
+   * Set protocol to https://
+   * Used as argument for {@link protocol} method
+   * @memberof BreadUrlBuilder
    * @type {symbol}
+   * @static
    */
   static HTTPS = Symbol("https");
   /**
-   * Enforce protocol to http:// - used as argument for protocol() method
-   * @static
+   * Enforce protocol to http://
+   * Used as argument for {@link protocol} method
+   * @memberof BreadUrlBuilder
    * @type {symbol}
+   * @static
    */
   static FORCE_HTTP = Symbol("http");
 
@@ -52,7 +57,7 @@ export default class BreadUrlBuilder {
   /**
    * Creates an instance of BreadUrlBuilder.
    * @constructor
-   * @param {string} $baseUrl - sets the fallback to the shortest URL possibly generated
+   * @param {string} $baseUrl - sets the shortest URL to be generated
    */
   constructor($baseUrl) {
     if (typeof $baseUrl != "string")
@@ -63,7 +68,7 @@ export default class BreadUrlBuilder {
    * Extract the fragment from URL and store it in private field #hash
    * @private
    * @method
-   * @param {string} $url 
+   * @param {string} $url - URL to extract fragment from
    * @returns {string} - the $url without fragment
    */
   #extractHash($url) {
@@ -90,7 +95,7 @@ export default class BreadUrlBuilder {
    * Adds comparision key value pair to parameters
    * @private
    * @method
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   #addCompare($value, $options) {
     if (!this.#_compare.value) return this;
@@ -104,7 +109,7 @@ export default class BreadUrlBuilder {
   /**
    * BreadUrlBuilder defaults the URL protocol to https:// unless enforced by BreadUrlBuilder.FORCE_HTTP
    * @param {symbol} $protocol - Must be a value of BreadUrlBuilder.{@link FORCE_HTTP} or BreadUrlBuilder.{@link HTTPS}
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   protocol($protocol) {
     const allowedProtocols = [
@@ -120,8 +125,8 @@ export default class BreadUrlBuilder {
   }
   /**
    * Set the port number of the URL
-   * @param {number} $port 
-   * @returns {this}
+   * @param {number} $port - Port to be set
+   * @returns {BreadUrlBuilder}
    */
   port($port) {
     if (typeof $port != "number")
@@ -138,7 +143,7 @@ export default class BreadUrlBuilder {
   /**
    * Adds endpoint as fallback value for resets
    * @param {string} $endpoint - will be appended to baseUrl
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   endpoint($endpoint) {
     if (typeof $endpoint != "string")
@@ -148,8 +153,8 @@ export default class BreadUrlBuilder {
   }
   /**
    * Set the URL fragment
-   * @param {string} $hash
-   * @returns {this}
+   * @param {string} $hash - new fragment value
+   * @returns {BreadUrlBuilder}
    */
   hash($hash) {
     if (typeof $hash != "string")
@@ -159,16 +164,16 @@ export default class BreadUrlBuilder {
   }
   /**
    * Reset the URL to baseUrl or baseUrl + endpoint and append $path
-   * @param {string} $path 
-   * @returns {this}
+   * @param {string} $path - new first path segment
+   * @returns {BreadUrlBuilder}
    */
   setPath($path) {
     return this.clearPath().addPath($path)
   }
   /**
    * Append provided $path as URL segment
-   * @param {string|number} $path
-   * @returns {this}
+   * @param {string|number} $path - path segment to append
+   * @returns {BreadUrlBuilder}
    */
   addPath($path) {
     if (!$path.toString)
@@ -178,9 +183,8 @@ export default class BreadUrlBuilder {
   }
   /**
    * Append provided $path as URL segment
-   * @alias addPath
-   * @param {string|number} $path 
-   * @returns {this}
+   * @param {string|number} $path - path segment to append
+   * @returns {BreadUrlBuilder}
    */
   addToPath($path) {
     return this.addPath($path);
@@ -189,7 +193,7 @@ export default class BreadUrlBuilder {
    * Add URL query parameter as key value pair
    * @param {string} $parameter - GET query key 
    * @param {string|number} $value - GET query value 
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   addParameter($parameter, $value) {
     if (!$parameter || !$value) return this;
@@ -204,7 +208,7 @@ export default class BreadUrlBuilder {
   /**
    * Shorthand for addParameter("lean", $lean)
    * @param {boolean} $lean 
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   lean($lean = true) {
     this.#parameters.set("lean", !!$lean);
@@ -213,7 +217,7 @@ export default class BreadUrlBuilder {
   /**
    * Shorthand for addParameter("leanWithId", $leanWithid)
    * @param {boolean} $leanWithId
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   leanWithId($leanWithId = true) {
     this.#parameters.set("leanWithId", !!$leanWithId);
@@ -222,7 +226,7 @@ export default class BreadUrlBuilder {
   /**
    * Shorthand for addParameter("leanWithout_id", $leanWithout_id)
    * @param {boolean} $leanWithout_id
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   leanWithout_id($leanWithout_id = true) {
     this.#parameters.set("leanWithout_id", !!$leanWithout_id);
@@ -231,7 +235,7 @@ export default class BreadUrlBuilder {
   /**
    * Shorthand for addParameter("search", $search)
    * @param {string} $search - search term to query the resultset
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   search($search) {
     if (!$search) {
@@ -246,7 +250,7 @@ export default class BreadUrlBuilder {
   /**
    * Shorthand for addParameter("limit", $limit)
    * @param {string} $limit - max size of resultset
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   limit($limit) {
     if (typeof $limit != "number")
@@ -257,7 +261,7 @@ export default class BreadUrlBuilder {
   /**
    * Shorthand for addParameter("page", $page)
    * @param {string} $page - select page in paginated resultset
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   page($page) {
     if (typeof $page != "number")
@@ -267,10 +271,9 @@ export default class BreadUrlBuilder {
   }
   /**
    * Shorthand for addParameter("sort", $sort)
-   * @alias addToSort
    * @param {string} $sort - add field to sort resultset by
    * @param {symbol} $order - Must be a value of BreadUrlBuilder.{@link ASC} or BreadUrlBuilder.{@link DESC}
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   addSort($sort, $order) {
     if (!this.#parameters.has("sort"))
@@ -302,10 +305,9 @@ export default class BreadUrlBuilder {
   }
   /**
    * Shorthand for addParameter("sort", $sort)
-   * @alias addSort
    * @param {string} $sort - add field to sort resultset by
    * @param {symbol} $order - Must be a value of BreadUrlBuilder.{@link ASC} or BreadUrlBuilder.{@link DESC}
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   addToSort($sort, $order) {
     return this.addSort($sort, $order)
@@ -314,7 +316,7 @@ export default class BreadUrlBuilder {
    * Resets sort query parameter and replaces it with field name to sort by 
    * @param {string} $sort - set field to sort resultset by
    * @param {symbol} $order - Must be a value of BreadUrlBuilder.{@link ASC} or BreadUrlBuilder.{@link DESC}
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   sort($sort, $order) {
     const { ASC, DESC } = BreadUrlBuilder;
@@ -339,7 +341,7 @@ export default class BreadUrlBuilder {
   /**
    * Limit the fields of the resultset to provided $fields
    * @param {Array<string>|string} $fields - space separated string will be parsed to Array<string>
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   select($fields = "") {
     if (this.#_excludeCalled) throw new Error(SelectExcludeErrorMessage);
@@ -354,7 +356,7 @@ export default class BreadUrlBuilder {
   /**
    * Remove the provided $fields from the resultset
    * @param {Array<string>|string} $fields - space separated string will be parsed to Array<string>
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   exclude($fields = "") {
     if (this.#_selectCalled) throw new Error(SelectExcludeErrorMessage);
@@ -369,7 +371,7 @@ export default class BreadUrlBuilder {
   /**
    * Shorthand for addParameter("projection", JSON.stringify($projection))
    * @param {Object} $projection - mongoose projection object
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   projection($projection) {
     if (typeof $projection != "object")
@@ -380,7 +382,7 @@ export default class BreadUrlBuilder {
   /**
    * Shorthand for addParameter("query", JSON.stringify($query))
    * @param {Object} $query - mongoose query object
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   query($query) {
     if (typeof $query != "object")
@@ -391,7 +393,7 @@ export default class BreadUrlBuilder {
   /**
    * Shorthand for addParameter("populate", JSON.stringify($populate))
    * @param {Object} $populate - mongoose populate object
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   populate($populate) {
     if (!(typeof $populate == "object" || isArray($populate)))
@@ -404,7 +406,7 @@ export default class BreadUrlBuilder {
    * Adds key for compare query parameter
    * @example url.with('price').greaterThan(500)
    * @param {string} $key 
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   with($key) {
     if (typeof $key != "string")
@@ -417,7 +419,7 @@ export default class BreadUrlBuilder {
    * Removes key from comparison query parameters
    * @example url.without('price')
    * @param {string} $key 
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   without($key) {
     if (!(this.#parameters.has($key) || this.#_compare.history.has($key)))
@@ -433,9 +435,8 @@ export default class BreadUrlBuilder {
   }
   /**
    * Adds comparison value for preceding with()
-   * @alias gt
    * @param {string|number} $value 
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   greaterThan($value) {
     return this.#addCompare($value, {
@@ -445,9 +446,8 @@ export default class BreadUrlBuilder {
   }
   /**
    * Adds comparison value for preceding with()
-   * @alias lt
    * @param {string|number} $value 
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   lessThan($value) {
     return this.#addCompare($value, {
@@ -457,9 +457,8 @@ export default class BreadUrlBuilder {
   }
   /**
    * Adds comparison value for preceding with()
-   * @alias gte
    * @param {string|number} $value 
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   greaterThanEqual($value) {
     return this.#addCompare($value, {
@@ -469,9 +468,8 @@ export default class BreadUrlBuilder {
   }
   /**
    * Adds comparison value for preceding with()
-   * @alias lte
    * @param {string|number} $value 
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   lessThanEqual($value) {
     return this.#addCompare($value, {
@@ -481,9 +479,8 @@ export default class BreadUrlBuilder {
   }
   /**
    * Adds comparison value for preceding with()
-   * @alias eq
    * @param {string|number} $value 
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   equalTo($value) {
     return this.#addCompare($value, {
@@ -492,48 +489,43 @@ export default class BreadUrlBuilder {
     });
   }
   /**
-   * @alias greaterThan
    * @param {string|number} $value 
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   gt($value) {
     return this.greaterThan($value);
   }
   /**
-   * @alias lessThan
    * @param {string|number} $value 
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   lt($value) {
     return this.lessThan($value);
   }
   /**
-   * @alias equalTo
    * @param {string|number} $value 
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   eq($value) {
     return this.equalTo($value);
   }
   /**
    * @param {string|number} $value 
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   ne($value) {
     return this.not.equalTo($value);
   }
   /**
-   * @alias greaterThanEqual
    * @param {string|number} $value 
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   gte($value) {
     return this.greaterThanEqual($value);
   }
   /**
-   * @alias lessThanEqual
    * @param {string|number} $value 
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   lte($value) {
     return this.lessThanEqual($value);
@@ -542,7 +534,7 @@ export default class BreadUrlBuilder {
    * Getter for expressive chaining
    * @example url.with('visitors').to.be.equalTo('attending')
    * @readonly
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   get to() {
     return this;
@@ -551,7 +543,7 @@ export default class BreadUrlBuilder {
    * Getter for expressive chaining
    * @example url.with('visitors').to.be.equalTo('attending')
    * @readonly
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   get be() {
     return this;
@@ -560,7 +552,7 @@ export default class BreadUrlBuilder {
    * Getter for expressive chaining
    * @example url.with('price').greaterThanEqual(500).and.lessThan(100)
    * @readonly
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   get and() {
     return this;
@@ -569,7 +561,7 @@ export default class BreadUrlBuilder {
    * Getter for expressive chaining
    * @example url.with('price').greaterThanEqual(500).but.lessThan(100)
    * @readonly
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   get but() {
     return this;
@@ -578,7 +570,7 @@ export default class BreadUrlBuilder {
    * Invert the next comparison
    * @example url.with('visitors').not.equalTo('attending')
    * @readonly
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   get not() {
     this.#_compare.invert = !this.#_compare.invert;
@@ -587,7 +579,7 @@ export default class BreadUrlBuilder {
   // --------- RESET & CLEAR  -----------
   /**
    * Clears endpoint paths parameters and fragment
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   resetToBaseUrl() {
     this.#endpoint = "";
@@ -598,7 +590,7 @@ export default class BreadUrlBuilder {
   }
   /**
    * Clears paths parameters and fragment
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   resetToEndpoint() {
     this.#paths = new Array();
@@ -608,7 +600,7 @@ export default class BreadUrlBuilder {
   }
   /**
    * Clears paths and search parameter
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   clearPath() {
     this.#paths = new Array();
@@ -617,7 +609,7 @@ export default class BreadUrlBuilder {
   }
   /**
    * Clears parameters
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   clearParameter() {
     this.#parameters = new Map();
@@ -625,7 +617,7 @@ export default class BreadUrlBuilder {
   }
   /**
    * Clears fragment
-   * @returns {this}
+   * @returns {BreadUrlBuilder}
    */
   clearHash() {
     this.#hash = "";
@@ -634,7 +626,7 @@ export default class BreadUrlBuilder {
   // --------- GETTER  -----------
   /**
    * Access to currently set parameter stored for $key
-   * @param {string} $key 
+   * @param {string} $key - key to read
    * @returns {string|number|undefined}
    */
   getParameter($key) { return this.#parameters.get($key) }
@@ -684,7 +676,6 @@ export default class BreadUrlBuilder {
   getPopulate() { return this.#parameters.get("populate") }
   /**
    * Gets the configured URL as URL Object
-   * @alias get
    * @returns {URL}
    */
   getURL() { return this.get(); }
@@ -706,7 +697,6 @@ export default class BreadUrlBuilder {
   }
   /**
    * Gets the configured URL as string
-   * @alias toString
    * @returns {string}
    */
   toUrlString() {
@@ -721,3 +711,5 @@ export default class BreadUrlBuilder {
     return this.get().href;
   }
 }
+
+export default BreadUrlBuilder
