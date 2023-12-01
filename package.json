@@ -5,7 +5,8 @@
   "type": "module",
   "main": "src/BreadUrlBuilder.js",
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha test/*.js -R spec --ui bdd --timeout 9999999"
+    "test": "node node_modules/mocha/bin/mocha test/*.js -R spec --ui bdd --timeout 9999999",
+    "docs": "jsdoc src/BreadUrlBuilder.js -d docs"
   },
   "keywords": [],
   "author": "",
