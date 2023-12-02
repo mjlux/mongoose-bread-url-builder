@@ -2,11 +2,13 @@
   "name": "mongoose-bread-url-builder",
   "version": "1.0.2",
   "description": "",
+  "types": "index.d.ts",
   "type": "module",
   "main": "src/BreadUrlBuilder.js",
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha test/*.js -R spec --ui bdd --timeout 9999999",
-    "docs": "jsdoc src/BreadUrlBuilder.js -d docs"
+    "make:types": "npx -p typescript tsc src/BreadUrlBuilder.js --declaration --allowJs --emitDeclarationOnly --outFile index.d.ts",
+    "make:docs": "jsdoc src/BreadUrlBuilder.js -d docs"
   },
   "keywords": [],
   "author": "",
