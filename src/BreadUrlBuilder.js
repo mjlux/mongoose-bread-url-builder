@@ -533,7 +533,6 @@ class BreadUrlBuilder {
   /**
    * Getter for expressive chaining
    * @example url.with('visitors').to.be.equalTo('attending')
-   * @readonly
    * @returns {BreadUrlBuilder}
    */
   get to() {
@@ -542,7 +541,6 @@ class BreadUrlBuilder {
   /**
    * Getter for expressive chaining
    * @example url.with('visitors').to.be.equalTo('attending')
-   * @readonly
    * @returns {BreadUrlBuilder}
    */
   get be() {
@@ -551,7 +549,6 @@ class BreadUrlBuilder {
   /**
    * Getter for expressive chaining
    * @example url.with('price').greaterThanEqual(500).and.lessThan(100)
-   * @readonly
    * @returns {BreadUrlBuilder}
    */
   get and() {
@@ -560,7 +557,6 @@ class BreadUrlBuilder {
   /**
    * Getter for expressive chaining
    * @example url.with('price').greaterThanEqual(500).but.lessThan(100)
-   * @readonly
    * @returns {BreadUrlBuilder}
    */
   get but() {
@@ -569,7 +565,6 @@ class BreadUrlBuilder {
   /**
    * Invert the next comparison
    * @example url.with('visitors').not.equalTo('attending')
-   * @readonly
    * @returns {BreadUrlBuilder}
    */
   get not() {
