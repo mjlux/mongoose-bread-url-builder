@@ -249,24 +249,20 @@ class BreadUrlBuilder {
   }
   /**
    * Shorthand for addParameter("limit", $limit)
-   * @param {string} $limit - max size of resultset
+   * @param {number|string} $limit - max size of resultset
    * @returns {BreadUrlBuilder}
    */
   limit($limit) {
-    if (typeof $limit != "number")
-      throw new Error("invalid argument - expected Number - @limit()");
-    this.#parameters.set("limit", $limit);
+    this.#parameters.set("limit", parseInt($limit));
     return this;
   }
   /**
    * Shorthand for addParameter("page", $page)
-   * @param {string} $page - select page in paginated resultset
+   * @param {number|string} $page - select page in paginated resultset
    * @returns {BreadUrlBuilder}
    */
   page($page) {
-    if (typeof $page != "number")
-      throw new Error("invalid argument - expected Number - @page()");
-    this.#parameters.set("page", $page);
+    this.#parameters.set("page", parseInt($page));
     return this;
   }
   /**

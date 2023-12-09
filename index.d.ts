@@ -114,16 +114,16 @@ export default class BreadUrlBuilder {
     search($search: string): BreadUrlBuilder;
     /**
      * Shorthand for addParameter("limit", $limit)
-     * @param {string} $limit - max size of resultset
+     * @param {number|string} $limit - max size of resultset
      * @returns {BreadUrlBuilder}
      */
-    limit($limit: string): BreadUrlBuilder;
+    limit($limit: number | string): BreadUrlBuilder;
     /**
      * Shorthand for addParameter("page", $page)
-     * @param {string} $page - select page in paginated resultset
+     * @param {number|string} $page - select page in paginated resultset
      * @returns {BreadUrlBuilder}
      */
-    page($page: string): BreadUrlBuilder;
+    page($page: number | string): BreadUrlBuilder;
     /**
      * Shorthand for addParameter("sort", $sort)
      * @param {string} $sort - add field to sort resultset by
